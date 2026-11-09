@@ -2,9 +2,6 @@ import math
 import tkinter as tk
 from tkinter import messagebox
 
-# ---------------------------------------------------------
-# GRAFO INDEPENDIENTE (Sin conexión al árbol)
-# ---------------------------------------------------------
 class VerticeAislado:
     def __init__(self, id_nodo, etiqueta, tipo):
         self.id = id_nodo
@@ -26,9 +23,6 @@ class GrafoIndependiente:
             if n2 not in n1.vecinos: n1.vecinos.append(n2)
             if n1 not in n2.vecinos: n2.vecinos.append(n1)
 
-# ---------------------------------------------------------
-# INTERFAZ GRÁFICA EN TKINTER
-# ---------------------------------------------------------
 class InterfazGrafoAislado:
     def __init__(self, root, grafo):
         self.root = root
