@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <title>SIGE · Gestión Empresarial</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      --font-heading: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      box-sizing: border-box;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      --bg: #f3f4f6;
+      --cd: #fff;
+      --tx: #1f2937;
+      --mu: #6b7280;
+      --bd: #e5e7eb;
+      --pr: #1d4ed8;
+      --ok: #15803d;
+      --wa: #b45309;
+      --er: #b91c1c;
+      color-scheme: light;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111827;
+        --cd: #1f2937;
+        --tx: #f3f4f6;
+        --mu: #9ca3af;
+        --bd: #374151;
+        --pr: #60a5fa;
+        --ok: #4ade80;
+        --wa: #fbbf24;
+        --er: #f87171;
+        color-scheme: dark;
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --bg: #111827;
+      --cd: #1f2937;
+      --tx: #f3f4f6;
+      --mu: #9ca3af;
+      --bd: #374151;
+      --pr: #60a5fa;
+      --ok: #4ade80;
+      --wa: #fbbf24;
+      --er: #f87171;
+      color-scheme: dark;
+    }
+
+    html {
+      scroll-padding-top: env(safe-area-inset-top, 0px);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--tx);
+      font: 15px/1.5 var(--font-sans);
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4, .k b, .hero b, aside>b, #login b {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      letter-spacing: -.01em;
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      font-size: 22px;
+    }
+
+    h3 {
+      margin: 18px 0 8px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    #app {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      min-height: 100vh;
+    }
+
+    aside {
+      background: var(--cd);
+      border-right: 1px solid var(--bd);
+      padding: 16px 10px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: auto;
+    }
+
+    aside>b {
+      display: block;
+      padding: 4px 10px 12px;
+      font-size: 18px;
+    }
+
+    aside .u {
+      padding: 10px;
+      color: var(--mu);
+      font-size: 13px;
+      border-top: 1px solid var(--bd);
+      margin-top: 10px;
+    }
+
+    aside button.n {
+      display: block;
+      width: 100%;
+      text-align: left;
+      border: 0;
+      border-left: 3px solid transparent;
+      background: none;
+      color: var(--tx);
+      padding: 9px 10px;
+      margin-bottom: 2px;
+      border-radius: 6px;
+    }
+
+    aside button.n:hover {
+      background: var(--bg);
+    }
+
+    aside button.n.on {
+      background: rgba(29, 78, 216, .1);
+      color: var(--pr);
+      border-left-color: var(--pr);
+      font-weight: 600;
+    }
+
+    main {
+      padding: 22px;
+      min-width: 0;
+      max-width: 1100px;
+      width: 100%;
+    }
+
+    main>h2:not(.keep) {
+      display: none;
+    }
+
+    .card, .k, .hero {
+      background: var(--cd);
+      border: 1px solid var(--bd);
+      border-radius: 8px;
+    }
+
+    .card {
+      padding: 16px;
+      margin-bottom: 14px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .k {
+      padding: 14px;
+    }
+
+    .k span {
+      color: var(--mu);
+      font-size: 13px;
+    }
+
+    .k b {
+      display: block;
+      font-size: 22px;
+    }
+
+    .k[data-a]:hover {
+      transform: translateY(-2px);
+    }
+
+    .hero {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding: 18px 22px;
+      margin-bottom: 18px;
+    }
+
+    .hero button {
+      padding: 4px 12px;
+      margin-top: 6px;
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: flex-end;
+      margin-bottom: 10px;
+    }
+
+    label {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      font-size: 13px;
+      color: var(--mu);
+    }
+
+    input, select, textarea {
+      font: inherit;
+      padding: 8px 10px;
+      border: 1px solid var(--bd);
+      border-radius: 6px;
+      background: var(--bg);
+      color: var(--tx);
+      min-width: 0;
+    }
+
+    button {
+      font: inherit;
+      font-weight: 500;
+      padding: 8px 14px;
+      border-radius: 6px;
+      border: 1px solid var(--bd);
+      background: var(--cd);
+      color: var(--tx);
+      cursor: pointer;
+    }
+
+    button.p {
+      background: var(--pr);
+      border: 0;
+      color: #fff;
+    }
+
+    button.d {
+      color: var(--er);
+    }
+
+    button:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+
+    .chip {
+      display: inline-block;
+      background: var(--bg);
+      border: 1px solid var(--bd);
+      color: var(--tx);
+      padding: 2px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .03em;
+    }
+
+    .tw {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--bd);
+      white-space: nowrap;
+    }
+
+    th {
+      background: var(--bg);
+      color: var(--mu);
+      font-weight: 600;
+      font-size: 12px;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    td.num {
+      text-align: right;
+    }
+
+    .num, input[type=number], input[inputmode=numeric], input[name=id] {
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums slashed-zero;
+      font-feature-settings: normal;
+      font-size: .93em;
+    }
+
+    .err {
+      color: var(--er);
+      font-size: 13px;
+      min-height: 18px;
+    }
+
+    .ok { color: var(--ok); }
+    .wa { color: var(--wa); }
+    .mu { color: var(--mu); }
+    .er { color: var(--er); }
+
+    dialog {
+      border: 1px solid var(--bd);
+      border-radius: 14px;
+      background: var(--cd);
+      color: var(--tx);
+      padding: 20px;
+      width: min(440px, 94vw);
+    }
+
+    dialog form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    #login {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 16px;
+      background: var(--bgimg, none) center bottom/cover no-repeat, #cfd8e4;
+    }
+
+    #login form {
+      background: var(--cd);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, .25);
+      border-radius: 8px;
+      padding: 28px;
+      width: min(380px, 100%);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    @media (max-width: 760px) {
+      #app {
+        grid-template-columns: 1fr;
+      }
+
+      aside {
+        position: static;
+        height: auto;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+        padding: 10px;
+      }
+
+      aside>b, aside .u {
+        width: 100%;
+        border: 0;
+        margin: 0;
+        padding: 4px 8px;
+      }
+
+      aside button.n {
+        width: auto;
+      }
+
+      main {
+        padding: 14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+  <dialog id="dlg"></dialog>
+
+  <script>
+    const $ = s => document.querySelector(s);
+
+    const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    }[c]));
+
+    const money = n => new Intl.NumberFormat('es-CO', {
+      style: 'currency',
+      currency: 'COP',
+      maximumFractionDigits: 0
+    }).format(n || 0);
+
+    const norm = s => String(s)
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .trim()
+      .replace(/\s+/g, ' ');
+
+    const today = () => new Date().toISOString().slice(0, 10);
+
+
+    class AD {
+      constructor(c = 4) {
+        this.cap = Math.max(1, c);
+        this.n = 0;
+        this.d = new Array(this.cap);
+      }
+
+      add(x) {
+        if (this.n === this.cap) this.res(this.cap * 2);
+        this.d[this.n++] = x;
+      }
+
+      get(i) {
+        if (i < 0 || i >= this.n) throw new RangeError('Índice fuera de rango');
+        return this.d[i];
+      }
+
+      set(i, v) {
+        if (i < 0 || i >= this.n) throw new RangeError('Índice fuera de rango');
+        this.d[i] = v;
+      }
+
+      res(c) {
+        const b = new Array(c);
+        for (let i = 0; i < this.n; i++) b[i] = this.d[i];
+        this.d = b;
+        this.cap = c;
+      }
+
+      toList() {
+        return this.d.slice(0, this.n);
+      }
+
+      static from(a) {
+        const r = new AD();
+        a.forEach(x => r.add(x));
+        return r;
+      }
+    }
+
+    const SORT = {
+      'Burbuja': (a, k) => {
+        for (let i = 0; i < a.n - 1; i++) {
+          let s = 0;
+          for (let j = 0; j < a.n - 1 - i; j++) {
+            const x = a.get(j), y = a.get(j + 1);
+            if (k(x) > k(y)) {
+              a.set(j, y);
+              a.set(j + 1, x);
+              s = 1;
+            }
+          }
+          if (!s) break;
+        }
+      },
+
+      'Inserción': (a, k) => {
+        for (let i = 1; i < a.n; i++) {
+          const x = a.get(i);
+          let j = i - 1;
+          while (j >= 0 && k(a.get(j)) > k(x)) {
+            a.set(j + 1, a.get(j));
+            j--;
+          }
+          a.set(j + 1, x);
+        }
+      },
+
+      'Merge': (a, k) => {
+        const m = l => {
+          if (l.length < 2) return l;
+          const h = l.length >> 1,
+            L = m(l.slice(0, h)),
+            R = m(l.slice(h)),
+            o = [];
+          let i = 0, j = 0;
+          while (i < L.length && j < R.length) o.push(k(L[i]) <= k(R[j]) ? L[i++] : R[j++]);
+          return o.concat(L.slice(i), R.slice(j));
+        };
+        m(a.toList()).forEach((v, i) => a.set(i, v));
+      }
+    };
+
+    const bin = (a, v, k) => {
+      let l = 0, r = a.n - 1;
+      while (l <= r) {
+        const m = (l + r) >> 1, x = k(a.get(m));
+        if (x === v) return m;
+        if (x < v) l = m + 1;
+        else r = m - 1;
+      }
+      return -1;
+    };
+
+    const K = (f, num) => x => num ? +x[f] : String(x[f]).toLowerCase();
+
+
+    const KEY = 'sige_v1';
+    const BG0 = '';
+    let D, U = null, view = 'inicio';
+    const S = {};
+    const cart = {
+      v: {party: '', items: []},
+      c: {party: '', items: []}
+    };
+
+
+    const EXTRA = [
+      {id: '1004', nombre: 'Carlos Mejía', cargo: 'Jefe de bodega', tel: '', correo: '', salario: 2400000, rol: 'Bodega'},
+      {id: '1005', nombre: 'Laura Pérez', cargo: 'Contadora', tel: '', correo: '', salario: 3200000, rol: 'Contabilidad'},
+      {id: '1006', nombre: 'Diana Torres', cargo: 'Gestora de talento humano', tel: '', correo: '', salario: 3000000, rol: 'Recursos Humanos'},
+      {id: '1007', nombre: 'Andrés Gil', cargo: 'Comprador', tel: '', correo: '', salario: 2800000, rol: 'Compras'}
+    ];
+
+    const P = [
+      [101, 'Teclado mecánico', 'Periféricos', 145000, 30],
+      [102, 'Mouse inalámbrico', 'Periféricos', 65000, 50],
+      [103, 'Monitor 24 pulgadas', 'Pantallas', 620000, 12],
+      [104, 'Disco SSD 480GB', 'Almacenamiento', 210000, 25],
+      [105, 'Memoria RAM 8GB', 'Componentes', 130000, 40],
+      [106, 'Silla ergonómica', 'Mobiliario', 480000, 8],
+      [107, 'Webcam HD', 'Periféricos', 95000, 20],
+      [108, 'Router WiFi 6', 'Redes', 250000, 15]
+    ];
+
+    const VT = [
+      [5, 8, 6],
+      [12, 10, 15],
+      [2, 3, 1],
+      [7, 6, 9],
+      [10, 11, 14],
+      [1, 2, 0],
+      [4, 5, 3],
+      [3, 4, 6]
+    ];
+
+    function seed() {
+      const d = {
+        clientes: [
+          {id: '900100', nombre: 'Comercial Antioquia SAS', tel: '3001112233', correo: 'compras@comercial.co'},
+          {id: '43125678', nombre: 'María Gómez', tel: '3109998877', correo: 'maria@correo.co'}
+        ],
+        productos: P.map(([id, nombre, cat, precio, cant]) => ({id: String(id), nombre, cat, precio, cant})),
+        proveedores: [
+          {id: '800200', nombre: 'TecnoImport SAS', tel: '6044445566', correo: 'ventas@tecnoimport.co', prods: 'Periféricos, Componentes'},
+          {id: '800300', nombre: 'Muebles Andinos', tel: '6047778899', correo: 'info@andinos.co', prods: 'Mobiliario'}
+        ],
+        empleados: [
+          {id: '1000', nombre: 'Administrador', cargo: 'Gerente', tel: '', correo: '', salario: 0, rol: 'Administrador'},
+          {id: '1001', nombre: 'Juan Pablo Vergara Henao', cargo: 'Desarrollador', tel: '', correo: '', salario: 0, rol: 'Administrador'},
+          {id: '1002', nombre: 'Samuel Cañas López', cargo: 'Desarrollador', tel: '', correo: '', salario: 0, rol: 'Administrador'},
+          {id: '1003', nombre: 'Juan Manuel valencia', cargo: 'Vendedora', tel: '3001230000', correo: 'ana@empresa.co', salario: 2200000, rol: 'Ventas'},
+          ...EXTRA
+        ],
+        ventas: [],
+        compras: [],
+        fin: [],
+        movs: []
+      };
+
+      ['2026-01', '2026-02', '2026-03'].forEach((p, j) => {
+        const items = P
+          .map((x, i) => ({pid: String(x[0]), cant: VT[i][j], precio: x[3]}))
+          .filter(l => l.cant);
+        const total = items.reduce((s, l) => s + l.cant * l.precio, 0);
+        d.ventas.push({id: j + 1, fecha: p + '-15', party: '900100', items, total});
+        d.fin.push({fecha: p + '-15', tipo: 'Ingreso', concepto: 'Venta #' + (j + 1), monto: total});
+      });
+
+      return d;
+    }
+
+
+    function save() {
+      try {
+        localStorage.setItem(KEY, JSON.stringify(D));
+      } catch (e) {}
+    }
+
+    function load() {
+      try {
+        D = JSON.parse(localStorage.getItem(KEY));
+      } catch (e) {}
+
+      if (!D) D = seed();
+
+      D.empleados.forEach(e => {
+        if (e.rol === 'Empleado') e.rol = 'Ventas';
+      });
+
+      if (!D.v2) {
+        EXTRA.forEach(e => {
+          if (!D.empleados.some(x => x.id === e.id)) D.empleados.push(e);
+        });
+        D.v2 = 1;
+        save();
+      }
+    }
+
+    function applyBg() {
+      let b = BG0;
+      try {
+        b = localStorage.getItem('sige_bg') || BG0;
+      } catch (e) {}
+      document.documentElement.style.setProperty('--bgimg', b ? `url("${b}")` : 'none');
+    }
+
+
+    const M = {
+      clientes: {
+        t: 'Clientes',
+        f: [['id', 'Documento', 'id'], ['nombre', 'Nombre'], ['tel', 'Teléfono'], ['correo', 'Correo', 'e']]
+      },
+      productos: {
+        t: 'Productos',
+        f: [['id', 'Código', 'id'], ['nombre', 'Nombre'], ['cat', 'Categoría'], ['precio', 'Precio', 'n'], ['cant', 'Cantidad', 'n']]
+      },
+      proveedores: {
+        t: 'Proveedores',
+        f: [['id', 'NIT / Doc.', 'id'], ['nombre', 'Nombre'], ['tel', 'Teléfono'], ['correo', 'Correo', 'e'], ['prods', 'Productos que suministra']]
+      },
+      empleados: {
+        t: 'Empleados',
+        f: [
+          ['id', 'Documento', 'id'],
+          ['nombre', 'Nombre'],
+          ['cargo', 'Cargo'],
+          ['tel', 'Teléfono'],
+          ['correo', 'Correo', 'e'],
+          ['salario', 'Salario', 'n'],
+          ['rol', 'Rol', 's:Administrador|Ventas|Compras|Bodega|Contabilidad|Recursos Humanos']
+        ]
+      }
+    };
+
+    const NAV = [
+      ['inicio', 'Inicio'],
+      ['clientes', 'Clientes'],
+      ['productos', 'Productos'],
+      ['inventario', 'Inventario'],
+      ['proveedores', 'Proveedores'],
+      ['ventas', 'Ventas'],
+      ['compras', 'Compras'],
+      ['empleados', 'Empleados'],
+      ['finanzas', 'Finanzas'],
+      ['reportes', 'Reportes'],
+      ['admin', 'Administración']
+    ];
+
+    const ACC = {
+      'Administrador': {m: NAV.map(n => n[0])},
+      'Ventas': {m: ['inicio', 'clientes', 'productos', 'ventas', 'reportes'], ro: ['productos']},
+      'Compras': {m: ['inicio', 'proveedores', 'productos', 'inventario', 'compras'], ro: ['productos', 'inventario']},
+      'Bodega': {m: ['inicio', 'productos', 'inventario'], ro: ['productos']},
+      'Contabilidad': {m: ['inicio', 'finanzas', 'reportes']},
+      'Recursos Humanos': {m: ['inicio', 'empleados']}
+    };
+
+    const RC = {
+      'Administrador': '#7c3aed',
+      'Ventas': '#059669',
+      'Compras': '#d97706',
+      'Bodega': '#0891b2',
+      'Contabilidad': '#db2777',
+      'Recursos Humanos': '#4f46e5'
+    };
+
+
+    const isAdm = () => U && U.rol === 'Administrador';
+
+    const can = k => isAdm() || ((ACC[U && U.rol] || {m: ['inicio']}).m).includes(k);
+
+    const RO = k => !isAdm() && ((ACC[U && U.rol] || {}).ro || []).includes(k);
+
+    const tbl = (h, r) => `<div class="tw"><table><tr>${h.map(x => `<th>${x}</th>`).join('')}</tr>${r || `<tr><td colspan="${h.length}" class="mu">Sin registros</td></tr>`}</table></div>`;
+
+    const nom = (k, id) => (D[k].find(x => x.id === id) || {}).nombre || id;
+
+    const prod = id => D.productos.find(x => x.id === id);
+
+    const estado = p => p.cant <= 0
+      ? '<span class="er">Agotado</span>'
+      : p.cant <= 10
+        ? '<span class="wa">Pocas unidades</span>'
+        : '<span class="ok">Disponible</span>';
+
+    const opts = (a, sel) => a.map(x => `<option value="${esc(x.id)}" ${x.id === sel ? 'selected' : ''}>${esc(x.nombre)}${x.cant !== undefined ? ' (' + x.cant + ')' : ''}</option>`).join('');
+
+
+    const V = {
+      inicio() {
+        const al = can('inventario') || can('productos');
+        const low = al ? D.productos.filter(p => p.cant <= 10) : [];
+        const cnt = {
+          clientes: D.clientes.length,
+          productos: D.productos.length,
+          proveedores: D.proveedores.length,
+          empleados: D.empleados.length,
+          ventas: D.ventas.length,
+          compras: D.compras.length,
+          inventario: low.length + (low.length === 1 ? ' alerta' : ' alertas'),
+          finanzas: D.fin.length,
+          reportes: 'Ver',
+          admin: 'Ajustes'
+        };
+        const cards = NAV
+          .filter(n => n[0] !== 'inicio' && can(n[0]))
+          .map(n => `<div class="k" style="cursor:pointer" data-a="nav" data-v="${n[0]}"><span>${n[1]}</span><b>${cnt[n[0]]}</b></div>`)
+          .join('');
+
+        return `<h2 class="keep">Hola, ${esc(U.nombre.split(' ')[0])}</h2>
+          <p class="mu" style="margin-top:-8px">Tu rol es <b>${esc(U.rol)}</b>${U.cargo ? ' · ' + esc(U.cargo) : ''}. Estos son los módulos a los que tienes acceso.</p>
+          <div class="grid">${cards}</div>` +
+          (al ? `<div class="card"><h3 style="margin-top:0">Productos agotados o con pocas unidades</h3>${tbl(['Producto', 'Cantidad', 'Estado'],
+            low.map(p => `<tr><td>${esc(p.nombre)}</td><td>${p.cant}</td><td>${estado(p)}</td></tr>`).join(''))}</div>` : '');
+      },
+
+      inventario() {
+        const p = D.productos;
+        const form = RO('inventario') ? '' : `<div class="card"><form class="row" data-f="mov">
+          <label>Producto<select name="p">${opts(p)}</select></label>
+          <label>Movimiento<select name="t"><option>Entrada</option><option>Salida</option></select></label>
+          <label>Cantidad<input name="q" type="number" min="1" value="1" required></label>
+          <button class="p">Registrar</button></form><div class="err" id="err"></div></div>`;
+
+        return `<h2>Inventario</h2>${form}
+          ${tbl(['Código', 'Producto', 'Existencias', 'Estado'], p.map(x => `<tr><td>${x.id}</td><td>${esc(x.nombre)}</td><td>${x.cant}</td><td>${estado(x)}</td></tr>`).join(''))}
+          <h3>Últimos movimientos</h3>
+          ${tbl(['Fecha', 'Producto', 'Tipo', 'Cant.', 'Motivo'], D.movs.slice(-8).reverse().map(m =>
+            `<tr><td>${m.fecha}</td><td>${esc(nom('productos', m.pid))}</td><td>${m.tipo}</td><td>${m.cant}</td><td>${esc(m.motivo)}</td></tr>`).join(''))}`;
+      },
+
+      ventas: () => tx('v'),
+      compras: () => tx('c'),
+
+      finanzas() {
+        const ing = D.fin.filter(f => f.tipo === 'Ingreso').reduce((s, f) => s + f.monto, 0);
+        const gas = D.fin.filter(f => f.tipo === 'Gasto').reduce((s, f) => s + f.monto, 0);
+
+        return `<h2>Finanzas</h2>
+          <div class="grid">
+            <div class="k"><span>Ingresos</span><b class="ok">${money(ing)}</b></div>
+            <div class="k"><span>Gastos</span><b class="er">${money(gas)}</b></div>
+            <div class="k"><span>Balance</span><b>${money(ing - gas)}</b></div>
+          </div>
+          <div class="card"><form class="row" data-f="fin">
+            <label>Tipo<select name="t"><option>Ingreso</option><option>Gasto</option></select></label>
+            <label>Concepto<input name="c" required></label>
+            <label>Monto<input name="m" type="number" min="1" required></label>
+            <button class="p">Registrar</button></form></div>
+          ${tbl(['Fecha', 'Tipo', 'Concepto', 'Monto'], D.fin.slice().reverse().slice(0, 30).map(f =>
+            `<tr><td>${f.fecha}</td><td class="${f.tipo === 'Ingreso' ? 'ok' : 'er'}">${f.tipo}</td><td>${esc(f.concepto)}</td><td>${money(f.monto)}</td></tr>`).join(''))}`;
+      },
+
+      reportes() {
+        const per = [...new Set(D.ventas.map(v => v.fecha.slice(0, 7)))].sort();
+        const ids = D.productos.map(p => p.id);
+        const mx = ids.map(() => per.map(() => 0));
+
+        D.ventas.forEach(v => v.items.forEach(l => {
+          const i = ids.indexOf(l.pid), j = per.indexOf(v.fecha.slice(0, 7));
+          if (i >= 0) mx[i][j] += l.cant;
+        }));
+
+        const tot = D.ventas.reduce((s, v) => s + v.total, 0);
+        const uni = mx.flat().reduce((a, b) => a + b, 0);
+        const top = AD.from(ids.map((id, i) => ({id, cant: mx[i].reduce((a, b) => a + b, 0)})));
+        SORT.Merge(top, x => -x.cant);
+        const sum = r => r.reduce((a, b) => a + b, 0);
+
+        return `<h2>Reportes</h2>
+          <div class="grid">
+            <div class="k"><span>Ventas realizadas</span><b>${D.ventas.length}</b></div>
+            <div class="k"><span>Total vendido</span><b>${money(tot)}</b></div>
+            <div class="k"><span>Unidades vendidas</span><b>${uni}</b></div>
+          </div>
+          <h3>Productos más vendidos</h3>
+          ${tbl(['#', 'Producto', 'Unidades'], top.toList().slice(0, 5).map((x, i) => `<tr><td>${i + 1}</td><td>${esc(nom('productos', x.id))}</td><td>${x.cant}</td></tr>`).join(''))}
+          <h3>Matriz de ventas (producto × período)</h3>
+          ${tbl(['Producto', ...per, 'Total'],
+            ids.map((id, i) => `<tr><td>${esc(nom('productos', id))}</td>${mx[i].map(c => `<td>${c}</td>`).join('')}<td><b>${sum(mx[i])}</b></td></tr>`).join('') +
+            `<tr><td><b>Total</b></td>${per.map((_, j) => `<td><b>${mx.reduce((s, r) => s + r[j], 0)}</b></td>`).join('')}<td><b>${uni}</b></td></tr>`)}
+          <h3>Estado del inventario</h3>
+          ${tbl(['Producto', 'Existencias', 'Estado'], D.productos.map(p => `<tr><td>${esc(p.nombre)}</td><td>${p.cant}</td><td>${estado(p)}</td></tr>`).join(''))}`;
+      },
+
+      admin() {
+        const roles = Object.entries(ACC).map(([r, a]) => `<tr><td><span class="chip">${r}</span></td><td style="white-space:normal">${
+          a.m.filter(x => x !== 'inicio').map(x => (NAV.find(n => n[0] === x) || [])[1] + ((a.ro || []).includes(x) ? ' (solo lectura)' : '')).join(', ')}</td></tr>`).join('');
+
+        return `<h2>Administración</h2>
+          <div class="card"><h3 style="margin-top:0">Acceso</h3>
+            <p class="mu">Solo ingresan las personas registradas en <b>Empleados</b>. Para dar o quitar acceso, agrega o elimina empleados (nombre + documento) y asigna el rol.</p></div>
+          <div class="card"><h3 style="margin-top:0">Respaldo de datos</h3>
+            <div class="row">
+              <button data-a="exp">Descargar respaldo</button>
+              <label>Restaurar respaldo<input type="file" accept=".json" data-c="imp"></label>
+              <button class="d" data-a="reset">Restablecer datos de demostración</button>
+            </div><div class="err" id="err"></div></div>
+          <div class="card"><h3 style="margin-top:0">Imagen de fondo</h3>
+            <p class="mu">Sube una foto real de tu empresa u oficina. Se muestra en el login (se guarda en este navegador).</p>
+            <div class="row"><input type="file" accept="image/*" data-c="bg"><button data-a="bgx">Quitar imagen</button></div></div>
+          <div class="card"><h3 style="margin-top:0">Roles y accesos</h3>${tbl(['Rol', 'Módulos con acceso'], roles)}</div>
+          <div class="card"><h3 style="margin-top:0">Medición de algoritmos</h3>
+            <p class="mu">Tiempo real de Burbuja, Inserción y Merge Sort sobre el arreglo dinámico propio.</p>
+            <button data-a="bench">Medir</button><div id="bres" style="margin-top:10px"></div></div>`;
+      }
+    };
+
+    function crud(k) {
+      const m = M[k];
+      const st = S[k] || (S[k] = {f: m.f[0][0], alg: 'Merge', q: ''});
+      const fd = m.f.find(x => x[0] === st.f);
+      const num = fd[2] === 'id' || fd[2] === 'n';
+      const a = AD.from(D[k]);
+      SORT[st.alg](a, K(st.f, num));
+      let rows = a.toList(), msg = '';
+
+      if (st.q) {
+        if (/^\d+$/.test(st.q)) {
+          const b = AD.from(D[k]);
+          SORT.Merge(b, K('id', 1));
+          const i = bin(b, +st.q, K('id', 1));
+          rows = i < 0 ? [] : [b.get(i)];
+          msg = i < 0
+            ? `Búsqueda binaria: ID ${st.q} no encontrado.`
+            : `Búsqueda binaria: ID ${st.q} encontrado en el índice ${i}.`;
+        } else {
+          const q = norm(st.q);
+          rows = rows.filter(r => norm(Object.values(r).join(' ')).includes(q));
+          msg = `${rows.length} coincidencia(s).`;
+        }
+      }
+
+      const ro = RO(k);
+      const fmt = (f, v) => f[2] === 'n' && (f[0] === 'precio' || f[0] === 'salario') ? money(v) : esc(v);
+
+      return `<h2>${m.t}</h2>
+        <div class="card"><div class="row">
+          ${ro ? '' : `<button class="p" data-a="new" data-k="${k}">+ Nuevo</button>`}
+          <label>Ordenar por<select data-c="sf">${m.f.map(f => `<option value="${f[0]}" ${f[0] === st.f ? 'selected' : ''}>${f[1]}</option>`).join('')}</select></label>
+          <label>Algoritmo<select data-c="sa">${Object.keys(SORT).map(x => `<option ${x === st.alg ? 'selected' : ''}>${x}</option>`).join('')}</select></label>
+          <form class="row" data-f="q"><label>Buscar (ID exacto o texto)<input name="q" value="${esc(st.q)}"></label><button>Buscar</button></form>
+        </div><div class="mu">${msg}</div></div>
+        ${tbl([...m.f.map(f => f[1]), ''], rows.map(r => `<tr>${m.f.map(f => `<td>${fmt(f, r[f[0]])}</td>`).join('')}<td>${ro ? '' :
+          `<button data-a="edit" data-k="${k}" data-id="${esc(r.id)}">Editar</button> <button class="d" data-a="del" data-k="${k}" data-id="${esc(r.id)}">Eliminar</button>`}</td></tr>`).join(''))}`;
+    }
+
+    Object.keys(M).forEach(k => V[k] = () => crud(k));
+
+    function tx(t) {
+      const v = t === 'v', c = cart[t], pa = D[v ? 'clientes' : 'proveedores'];
+      if (!c.party && pa[0]) c.party = pa[0].id;
+      const tot = c.items.reduce((s, l) => s + l.cant * l.precio, 0);
+      const h = D[v ? 'ventas' : 'compras'].slice(-8).reverse();
+
+      return `<h2>${v ? 'Ventas' : 'Compras'}</h2>
+        <div class="card">
+          <div class="row"><label>${v ? 'Cliente' : 'Proveedor'}<select data-c="party" data-t="${t}">${opts(pa, c.party)}</select></label></div>
+          <form class="row" data-f="line" data-t="${t}">
+            <label>Producto<select name="p">${opts(D.productos)}</select></label>
+            <label>Cantidad<input name="q" type="number" min="1" value="1" required></label>
+            ${v ? '' : '<label>Costo unitario<input name="u" type="number" min="1" required></label>'}
+            <button>Agregar</button>
+          </form>
+          <div class="err" id="err"></div>
+          ${tbl(['Producto', 'Cant.', 'Precio', 'Subtotal', ''], c.items.map((l, i) =>
+            `<tr><td>${esc(nom('productos', l.pid))}</td><td>${l.cant}</td><td>${money(l.precio)}</td><td>${money(l.cant * l.precio)}</td>
+             <td><button class="d" data-a="rm" data-t="${t}" data-i="${i}">Quitar</button></td></tr>`).join(''))}
+          <div class="row" style="margin-top:12px"><b>Total: ${money(tot)}</b>
+            <button class="p" data-a="conf" data-t="${t}" ${c.items.length ? '' : 'disabled'}>Registrar ${v ? 'venta' : 'compra'}</button></div>
+        </div>
+        <h3>Últimas ${v ? 'ventas' : 'compras'}</h3>
+        ${tbl(['#', 'Fecha', v ? 'Cliente' : 'Proveedor', 'Total'], h.map(x =>
+          `<tr><td>${x.id}</td><td>${x.fecha}</td><td>${esc(nom(v ? 'clientes' : 'proveedores', x.party))}</td><td>${money(x.total)}</td></tr>`).join(''))}`;
+    }
+
+
+    function render() {
+      if (!U) {
+        $('#root').innerHTML = `<div id="login"><form data-f="login">
+          <div><b style="font-size:24px">SIGE</b><div class="mu">Sistema Integral de Gestión Empresarial</div>
+            <div style="margin-top:14px;font-weight:600">Ingreso del personal</div></div>
+          <label>Nombre completo<input name="n" type="text" autocapitalize="words" spellcheck="false"></label>
+          <label>Documento de identidad<input name="d" type="text" inputmode="numeric" spellcheck="false"></label>
+          <div class="err" id="err"></div>
+          <button class="p" type="submit">Ingresar</button>
+          <button type="button" data-a="fill">Usar acceso de prueba</button>
+          <div class="mu" style="font-size:12px">Acceso solo para personal registrado de la empresa.<br>Acceso de prueba: <b>Administrador</b> · documento <b>1000</b></div>
+        </form></div>`;
+        return;
+      }
+
+      const nav = NAV.filter(n => can(n[0]));
+      if (!nav.some(n => n[0] === view)) view = 'inicio';
+      const lab = (NAV.find(n => n[0] === view) || [])[1];
+
+      $('#root').innerHTML = `<div id="app"><aside><b>SIGE</b>
+        ${nav.map(n => `<button class="n ${n[0] === view ? 'on' : ''}" data-a="nav" data-v="${n[0]}">${n[1]}</button>`).join('')}
+        <button class="n" data-a="out">Salir</button>
+        <div class="u">${esc(U.nombre)}<br>${esc(U.cargo || '')}<br><span class="chip">${esc(U.rol)}</span></div></aside>
+        <main><div class="hero">
+          <div><div class="mu" style="font-size:13px">Sistema Integral de Gestión Empresarial</div><b style="font-size:20px">${lab}</b></div>
+          <div style="text-align:right"><div>${esc(U.nombre)}</div><span class="chip">${esc(U.rol)}</span><br><button data-a="out">Cerrar sesión</button></div>
+        </div>${V[view]()}</main></div>`;
+
+      $('#root').querySelectorAll('td').forEach(t => {
+        const x = t.textContent.trim();
+        if (x && /^[\s\d$.,:%+-]+$/.test(x)) t.classList.add('num');
+      });
+    }
+
+    const err = m => {
+      const e = $('#err');
+      if (e) e.textContent = m;
+    };
+
+    const msg = t => {
+      let e = $('#toast');
+      if (!e) {
+        e = document.createElement('div');
+        e.id = 'toast';
+        e.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1f2937;color:#fff;padding:10px 16px;border-radius:6px;z-index:99;font-size:14px;max-width:90vw';
+        document.body.appendChild(e);
+      }
+      e.textContent = t;
+      e.hidden = false;
+      clearTimeout(e.t);
+      e.t = setTimeout(() => e.hidden = true, 3500);
+    };
+
+
+    const A = {
+      fill: () => {
+        $('input[name=n]').value = 'Administrador';
+        $('input[name=d]').value = '1000';
+        $('input[name=d]').focus();
+      },
+
+      nav: d => {
+        view = d.v;
+        render();
+      },
+
+      out: () => {
+        U = null;
+        try {
+          sessionStorage.removeItem('sige_u');
+        } catch (e) {}
+        render();
+      },
+
+      close: () => $('#dlg').close(),
+
+      new: d => RO(d.k) || form(d.k),
+
+      edit: d => RO(d.k) || form(d.k, d.id),
+
+      bgx: () => {
+        try {
+          localStorage.removeItem('sige_bg');
+        } catch (e) {}
+        applyBg();
+      },
+
+      del: (d, b) => {
+        if (RO(d.k)) return;
+
+        if (d.k === 'empleados') {
+          const r = D.empleados.find(x => x.id === d.id);
+          if (!isAdm() && r.rol === 'Administrador') return msg('Solo un administrador puede gestionar administradores.');
+          if (d.id === U.id) return msg('No puedes eliminar tu propio usuario.');
+          if (r.rol === 'Administrador' && D.empleados.filter(x => x.rol === 'Administrador').length < 2) return msg('Debe existir al menos un administrador.');
+        }
+
+        if (b.dataset.c !== '1') {
+          b.dataset.c = '1';
+          b.textContent = '¿Seguro?';
+          setTimeout(() => {
+            b.dataset.c = '';
+            b.textContent = 'Eliminar';
+          }, 3000);
+          return;
+        }
+
+        D[d.k] = D[d.k].filter(x => x.id !== d.id);
+        save();
+        render();
+      },
+
+      rm: d => {
+        cart[d.t].items.splice(+d.i, 1);
+        render();
+      },
+
+      conf: d => {
+        const t = d.t, v = t === 'v', c = cart[t];
+        if (!c.items.length) return;
+
+        if (v) for (const l of c.items) {
+          if (l.cant > (prod(l.pid) || {cant: 0}).cant) return err('Existencias insuficientes de ' + nom('productos', l.pid));
+        }
+
+        const lista = v ? 'ventas' : 'compras';
+        const id = Math.max(0, ...D[lista].map(x => x.id)) + 1;
+        const total = c.items.reduce((s, l) => s + l.cant * l.precio, 0);
+
+        c.items.forEach(l => {
+          prod(l.pid).cant += v ? -l.cant : l.cant;
+          D.movs.push({
+            fecha: today(),
+            pid: l.pid,
+            tipo: v ? 'Salida' : 'Entrada',
+            cant: l.cant,
+            motivo: (v ? 'Venta #' : 'Compra #') + id
+          });
+        });
+
+        D[lista].push({id, fecha: today(), party: c.party, items: c.items, total});
+        D.fin.push({
+          fecha: today(),
+          tipo: v ? 'Ingreso' : 'Gasto',
+          concepto: (v ? 'Venta #' : 'Compra #') + id,
+          monto: total
+        });
+
+        cart[t] = {party: c.party, items: []};
+        save();
+        render();
+      },
+
+      exp: async () => {
+        try {
+          const d = await claude.use('downloads');
+          if (!d) throw 0;
+          await d.save({filename: 'sige_respaldo.json', data: JSON.stringify(D, null, 1)});
+        } catch (e) {
+          err('La descarga no está disponible en esta vista.');
+        }
+      },
+
+      reset: (d, b) => {
+        if (b.dataset.c !== '1') {
+          b.dataset.c = '1';
+          b.textContent = 'Pulsa otra vez para confirmar';
+          setTimeout(() => {
+            b.dataset.c = '';
+            b.textContent = 'Restablecer datos de demostración';
+          }, 3500);
+          return;
+        }
+
+        D = seed();
+        U = D.empleados[0];
+        save();
+        render();
+      },
+
+      bench: () => {
+        const r = [200, 500, 1000, 2000].map(n => `<tr><td>${n}</td>${Object.keys(SORT).map(a => {
+          const ar = AD.from(Array.from({length: n}, () => ({x: Math.random()})));
+          const t = performance.now();
+          SORT[a](ar, o => o.x);
+          return `<td>${(performance.now() - t).toFixed(1)} ms</td>`;
+        }).join('')}</tr>`).join('');
+        $('#bres').innerHTML = tbl(['n', ...Object.keys(SORT)], r);
+      }
+    };
+
+
+    const C = {
+      bg: t => {
+        const f = t.files[0];
+        if (!f) return;
+        const r = new FileReader();
+        r.onload = () => {
+          const im = new Image();
+          im.onload = () => {
+            const k = Math.min(1, 1600 / im.width), c = document.createElement('canvas');
+            c.width = im.width * k;
+            c.height = im.height * k;
+            c.getContext('2d').drawImage(im, 0, 0, c.width, c.height);
+            try {
+              localStorage.setItem('sige_bg', c.toDataURL('image/jpeg', .8));
+              applyBg();
+              err('Imagen aplicada.');
+            } catch (e) {
+              err('No se pudo guardar la imagen.');
+            }
+          };
+          im.src = r.result;
+        };
+        r.readAsDataURL(f);
+      },
+
+      sf: t => {
+        S[view].f = t.value;
+        render();
+      },
+
+      sa: t => {
+        S[view].alg = t.value;
+        render();
+      },
+
+      party: t => {
+        cart[t.dataset.t].party = t.value;
+      },
+
+      imp: t => {
+        const f = t.files[0];
+        if (!f) return;
+        const r = new FileReader();
+        r.onload = () => {
+          try {
+            const d = JSON.parse(r.result);
+            if (!Array.isArray(d.empleados) || !d.empleados.some(e => e.rol === 'Administrador')) throw 0;
+            D = d;
+            save();
+            U = D.empleados.find(e => e.id === U.id) || D.empleados[0];
+            render();
+          } catch (e) {
+            err('Archivo de respaldo inválido.');
+          }
+        };
+        r.readAsText(f);
+      }
+    };
+
+
+    const F = {
+      login: async f => {
+        const fd = new FormData(f);
+        const n = norm(fd.get('n')).split(' ').filter(Boolean);
+        const d = String(fd.get('d')).replace(/\D/g, '');
+        let u = null, srv = false;
+
+        try {
+          const r = await fetch('/api/login', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({nombre: String(fd.get('n')), documento: d})
+          });
+          if (r.status === 401) return err('Datos no autorizados. Verifica tu nombre y documento.');
+          if (r.ok) {
+            const j = await r.json();
+            srv = true;
+            u = Object.assign({}, D.empleados.find(x => x.id === j.usuario.id) || {tel: '', correo: '', salario: 0}, j.usuario);
+          }
+        } catch (e) {}
+
+        if (!srv) u = D.empleados.find(x => x.id === d && n.length && n.every(t => norm(x.nombre).split(' ').includes(t)));
+        if (!u) return err('Datos no autorizados. Verifica tu nombre y documento.');
+
+        U = u;
+        view = 'inicio';
+        try {
+          sessionStorage.setItem('sige_u', u.id);
+        } catch (e) {}
+        render();
+      },
+
+      q: f => {
+        S[view].q = new FormData(f).get('q').trim();
+        render();
+      },
+
+      mov: f => {
+        const fd = new FormData(f), p = prod(fd.get('p')), q = +fd.get('q'), t = fd.get('t');
+        if (!(q > 0)) return err('Cantidad inválida.');
+        if (t === 'Salida' && q > p.cant) return err('No hay existencias suficientes.');
+        p.cant += t === 'Entrada' ? q : -q;
+        D.movs.push({fecha: today(), pid: p.id, tipo: t, cant: q, motivo: 'Ajuste manual'});
+        save();
+        render();
+      },
+
+      fin: f => {
+        const fd = new FormData(f);
+        D.fin.push({fecha: today(), tipo: fd.get('t'), concepto: fd.get('c').trim(), monto: +fd.get('m')});
+        save();
+        render();
+      },
+
+      line: f => {
+        const fd = new FormData(f), t = f.dataset.t, v = t === 'v', p = prod(fd.get('p')), q = +fd.get('q');
+        if (!(q > 0)) return err('Cantidad inválida.');
+        const ya = cart[t].items.filter(l => l.pid === p.id).reduce((s, l) => s + l.cant, 0);
+        if (v && ya + q > p.cant) return err(`Solo hay ${p.cant} unidades de ${p.nombre}.`);
+        cart[t].items.push({pid: p.id, cant: q, precio: v ? p.precio : +fd.get('u')});
+        render();
+      },
+
+      crud: f => {
+        const k = f.dataset.k, old = f.dataset.id, fd = new FormData(f), o = {};
+
+        for (const [key, , t] of M[k].f) {
+          const x = String(fd.get(key) ?? '').trim();
+          o[key] = t === 'n' ? +x : x;
+        }
+
+        if (!/^\d{1,15}$/.test(o.id)) return err('El identificador debe ser numérico (solo dígitos).');
+        if (!o.nombre) return err('El nombre es obligatorio.');
+        if (D[k].some(x => x.id === o.id && x.id !== old)) return err('Ya existe un registro con ese identificador.');
+
+        if (k === 'empleados') {
+          if (old && old === U.id && isAdm() && o.rol !== 'Administrador') return err('No puedes quitarte tu propio rol de administrador.');
+          if (!isAdm() && (o.rol === 'Administrador' || (old && D.empleados.find(x => x.id === old).rol === 'Administrador'))) return err('Solo un administrador puede gestionar administradores.');
+          if (!isAdm() && old === U.id && o.rol !== U.rol) return err('No puedes cambiar tu propio rol.');
+        }
+
+        if (old) {
+          const i = D[k].findIndex(x => x.id === old);
+          D[k][i] = o;
+          if (k === 'empleados' && old === U.id) U = o;
+        } else {
+          D[k].push(o);
+        }
+
+        save();
+        $('#dlg').close();
+        render();
+      }
+    };
+
+    function form(k, id) {
+      const m = M[k], r = id ? D[k].find(x => x.id === id) : {};
+
+      const campo = ([key, l, t]) => `<label>${l}${t && t.startsWith('s:')
+        ? `<select name="${key}">${t.slice(2).split('|').filter(o => isAdm() || o !== 'Administrador').map(o => `<option ${r[key] === o ? 'selected' : ''}>${o}</option>`).join('')}</select>`
+        : `<input name="${key}" value="${esc(r[key] ?? '')}" ${t === 'n' ? 'type="number" min="0" step="any"' : t === 'e' ? 'type="email"' : ''} ${t === 'id' && id ? 'readonly' : ''} ${key === 'nombre' || t === 'id' ? 'required' : ''}>`}</label>`;
+
+      $('#dlg').innerHTML = `<form data-f="crud" data-k="${k}" data-id="${esc(id || '')}">
+        <h3 style="margin:0">${id ? 'Editar' : 'Nuevo'} · ${m.t}</h3>${m.f.map(campo).join('')}
+        <div class="err" id="err"></div>
+        <div class="row"><button class="p">Guardar</button><button type="button" data-a="close">Cancelar</button></div></form>`;
+
+      $('#dlg').showModal();
+    }
+
+
+    document.addEventListener('click', e => {
+      const sb = e.target.closest('form[data-f] button:not([type=button])');
+      if (sb) {
+        e.preventDefault();
+        const f = sb.form;
+        if (f.reportValidity() && F[f.dataset.f]) F[f.dataset.f](f);
+        return;
+      }
+
+      const b = e.target.closest('[data-a]');
+      if (b && A[b.dataset.a]) A[b.dataset.a](b.dataset, b);
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && e.target.matches && e.target.matches('form[data-f] input')) {
+        e.preventDefault();
+        const b = e.target.form.querySelector('button:not([type=button])');
+        if (b) b.click();
+      }
+    });
+
+    document.addEventListener('submit', e => {
+      e.preventDefault();
+      const f = e.target;
+      if (F[f.dataset.f]) F[f.dataset.f](f);
+    });
+
+    document.addEventListener('change', e => {
+      const t = e.target;
+      if (t.dataset && C[t.dataset.c]) C[t.dataset.c](t);
+    });
+
+
+    applyBg();
+    load();
+    try {
+      U = D.empleados.find(x => x.id === sessionStorage.getItem('sige_u')) || null;
+    } catch (e) {}
+    render();
+  </script>
+</body>
+
+</html>
